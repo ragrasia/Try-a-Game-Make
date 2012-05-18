@@ -11,4 +11,3 @@ Try Make Game(all try)
  
  That this project is to create a game or practice how to create a view and is intended to study.
 
-I think this project and a very high level of programming knowledge, because most think that is close to the foundation.
