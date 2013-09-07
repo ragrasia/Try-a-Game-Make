@@ -3,7 +3,6 @@ package kr.juyoung.tetris;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import kr.juyoung.tetris.exception.KeyTypeException;
 
 /**
  * 테트리스에서 사용되는 키 입력에 대한 이벤트를 정의 기본적으로 메뉴 화면에 대한 입력이 기본 설정이다. setKeyListener를
@@ -36,9 +35,6 @@ public class TetrisKeyListener extends KeyAdapter {
 
 		} else if (keySetting == SET_GAME) {
 
-		} else {
-			System.out.println("ex");
-			new KeyTypeException();
 		}
 	}
 
