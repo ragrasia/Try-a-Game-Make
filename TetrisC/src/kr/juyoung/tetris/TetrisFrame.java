@@ -29,31 +29,31 @@ public class TetrisFrame extends JFrame{
 	}
 
 	public TetrisFrame() {
-		// »ı¼º
+		// ìƒì„±
 		setTitle("Tetris!");
 
-		// È­¸é ¼³Á¤
+		// í™”ë©´ ì„¤ì •
 		setSize(200, 410);
-		setResizable(false); // Ã¢ Å©±â °íÁ¤
+		setResizable(false); // ì°½ í¬ê¸° ê³ ì •
 
 		setPanelLocation();
 
-		// ½ÇÇà½Ã ¸ğ´ÏÅÍ Áß¾Ó¿¡ À§Ä¡
+		// ì‹¤í–‰ì‹œ ëª¨ë‹ˆí„° ì¤‘ì•™ì— ìœ„ì¹˜
 		setLocationRelativeTo(null);
 
-		// Æ÷Ä¿½º
+		// í¬ì»¤ìŠ¤
 		setFocusable(true);
 
-		// key ÀÌº¥Æ® ¼³Á¤
+		// key ì´ë²¤íŠ¸ ì„¤ì •
 		key = new TetrisMenuKeyListener(this);
 		addKeyListener(key);
 
-		// Á¾·á ÀÌº¥Æ® ±¸¼º
+		// ì¢…ë£Œ ì´ë²¤íŠ¸ êµ¬ì„±
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void setPanelLocation() {
-		String infoText = "<html>---------------»ç¿ë Å°--------------- <br />È­»ìÇ¥ Å° : ÀÌµ¿ <br /> ¿£ÅÍ Å° : °áÁ¤</html>";
+		String infoText = "<html>---------------ì‚¬ìš© í‚¤--------------- <br />í™”ì‚´í‘œ í‚¤ : ì´ë™ <br /> ì—”í„° í‚¤ : ê²°ì •</html>";
 		JLabel keyInfo = new JLabel(infoText);
 
 		// head part
