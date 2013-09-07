@@ -28,7 +28,7 @@ public class Tetris extends JFrame {
 		setFocusable(true);
 		
 		// key 이벤트 설정
-		TetrisKeyListener key = new TetrisKeyListener();
+		KeyListener key = new KeyListener();
 		addKeyListener(key);
 
 		// 종료 이벤트 구성

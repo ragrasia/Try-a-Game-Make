@@ -7,14 +7,14 @@ import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class TetrisBoard extends JPanel {
+public class Game extends JPanel {
 
 	final JLabel startText = new JLabel("Start");
 	final JLabel exitText = new JLabel("exit");
 	final JLabel stateText = new JLabel("input");
 	private static String input;
 
-	public TetrisBoard() {
+	public Game() {
 		
 //		// 화면 구성 요소 설정
 //		JPanel tetrisBoard = new JPanel();

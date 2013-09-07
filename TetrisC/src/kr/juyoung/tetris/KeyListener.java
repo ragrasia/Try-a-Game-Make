@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
  * @author hio
  * 
  */
-public class TetrisKeyListener extends KeyAdapter {
+public class KeyListener extends KeyAdapter {
 
 	final static int SET_MENU = 1;
 	final static int SET_GAME = 2;
