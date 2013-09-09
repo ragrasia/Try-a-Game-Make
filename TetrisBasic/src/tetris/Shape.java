@@ -61,6 +61,9 @@ public class Shape {
 		return pieceShape;
 	}
 
+	/**
+	 * 블록의 랜덤 설정
+	 */
 	public void setRandomShape() {
 		Random r = new Random();
 		int x = Math.abs(r.nextInt()) % 7 + 1;

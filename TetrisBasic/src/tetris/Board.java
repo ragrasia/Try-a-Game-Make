@@ -16,8 +16,8 @@ import tetris.Shape.Tetrominoes;
 
 public class Board extends JPanel implements ActionListener {
 
-	//�������� ������ ��Ʈ���� �ʵ� ũ��(�������̴� �ƴϴ�.)
-	final int BoardWidth = 20;
+	//가상적인 테트리스 필드의 크기
+	final int BoardWidth = 10;
 	final int BoardHeight = 22;
 
 	Timer timer;
@@ -25,7 +25,13 @@ public class Board extends JPanel implements ActionListener {
 	boolean isStarted = false;
 	boolean isPaused = false;
 	int numLinesRemoved = 0;
+	/**
+	 * 블록의 X 좌표
+	 */
 	int curX = 0;
+	/**
+	 * 불록의 Y 좌표
+	 */
 	int curY = 0;
 	JLabel statusbar;
 	Shape curPiece;
@@ -35,6 +41,7 @@ public class Board extends JPanel implements ActionListener {
 
 		setFocusable(true);
 		curPiece = new Shape();
+		//implements ActionListener하여 actionPerformed의 내용을 400 마다 실행한다.
 		timer = new Timer(400, this);
 		timer.start();
 
@@ -45,6 +52,8 @@ public class Board extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		System.out.println("new");
+		//떨어지는 상태 확인
 		if (isFallingFinished) {
 			isFallingFinished = false;
 			newPiece();
@@ -53,10 +62,18 @@ public class Board extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * 화면의 길이 / 게임화면의 전체 가로 길이
+	 * @return 작은 블록의 가로 길이
+	 */
 	int squareWidth() {
 		return (int) getSize().getWidth() / BoardWidth;
 	}
 
+	/**
+	 * 화면의 길이 / 게임화면의 전체 세로 길이
+	 * @return 작은 블록의 세로 길이
+	 */
 	int squareHeight() {
 		return (int) getSize().getHeight() / BoardHeight;
 	}
@@ -129,6 +146,9 @@ public class Board extends JPanel implements ActionListener {
 		pieceDropped();
 	}
 
+	/**
+	 * 블록 이동 처리 1
+	 */
 	private void oneLineDown() {
 		if (!tryMove(curPiece, curX, curY - 1))
 			pieceDropped();
@@ -154,9 +174,11 @@ public class Board extends JPanel implements ActionListener {
 
 	private void newPiece() {
 		curPiece.setRandomShape();
+		//처음 블록 생성 위치
 		curX = BoardWidth / 2 + 1;
 		curY = BoardHeight - 1 + curPiece.minY();
-
+		
+		//게임 오버 설정
 		if (!tryMove(curPiece, curX, curY)) {
 			curPiece.setShape(Tetrominoes.NoShape);
 			timer.stop();
@@ -178,7 +200,7 @@ public class Board extends JPanel implements ActionListener {
 		curPiece = newPiece;
 		curX = newX;
 		curY = newY;
-		repaint();
+		repaint();//다시 그리기
 		return true;
 	}
 
@@ -213,29 +235,46 @@ public class Board extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * 사각형 상자를 그린다.
+	 * @param g
+	 * @param x
+	 * @param y
+	 * @param shape
+	 */
 	private void drawSquare(Graphics g, int x, int y, Tetrominoes shape) {
+		//색 정의 모양과 같은 위치에 해당하는 것의 색이 정의되어 있다.
 		Color colors[] = { new Color(0, 0, 0), new Color(204, 102, 102),
 				new Color(102, 204, 102), new Color(102, 102, 204),
 				new Color(204, 204, 102), new Color(204, 102, 204),
 				new Color(102, 204, 204), new Color(218, 170, 0) };
 
+		//선택된 모양의 컬러 가져오기 
 		Color color = colors[shape.ordinal()];
 
+		//사각형의 내부
 		g.setColor(color);
 		g.fillRect(x + 1, y + 1, squareWidth() - 2, squareHeight() - 2);
 
+		//사각형의 외부 상단, 왼쪽
 		g.setColor(color.brighter());
-		g.drawLine(x, y + squareHeight() - 1, x, y);
-		g.drawLine(x, y, x + squareWidth() - 1, y);
+		g.drawLine(x, y + squareHeight() - 1, x, y); //왼쪽 선
+		g.drawLine(x, y, x + squareWidth() - 1, y); // 상단 선
 
+		//사각형의 외부 하단, 오른쪽
 		g.setColor(color.darker());
 		g.drawLine(x + 1, y + squareHeight() - 1, x + squareWidth() - 1, y
-				+ squareHeight() - 1);
+				+ squareHeight() - 1);//하단
 		g.drawLine(x + squareWidth() - 1, y + squareHeight() - 1, x
-				+ squareWidth() - 1, y + 1);
+				+ squareWidth() - 1, y + 1);// 오른쪽
 
 	}
 
+	/**
+	 * 키 입력 처리
+	 * @author hio
+	 *
+	 */
 	class TAdapter extends KeyAdapter {
 		public void keyPressed(KeyEvent e) {
 
