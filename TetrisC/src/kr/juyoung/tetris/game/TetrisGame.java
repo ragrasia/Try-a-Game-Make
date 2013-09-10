@@ -15,6 +15,11 @@ public class TetrisGame extends JPanel implements ActionListener{
 
 	Timer timer;
 	TetrisFrame parent;
+	
+	int pointX = 0;
+	int pointY = 0;
+	
+	int score = 0;
 
 	public TetrisGame(TetrisFrame parent) {
 		System.out.println("start game");
@@ -40,8 +45,9 @@ public class TetrisGame extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("600");
+		//게임 오버 확인
 		
+		//라인 제거 확인
 	}
 	
 }

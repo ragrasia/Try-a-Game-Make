@@ -14,6 +14,10 @@ import javax.swing.Timer;
 
 import tetris.Shape.Tetrominoes;
 
+/*
+ * 테트리스 블록은 블록이라고 말하며 그 블록을 이루는 사각형을 작은 블록이라고 지칭한다.
+ */
+
 public class Board extends JPanel implements ActionListener {
 
 	//가상적인 테트리스 필드의 크기
@@ -34,18 +38,25 @@ public class Board extends JPanel implements ActionListener {
 	 */
 	int curY = 0;
 	JLabel statusbar;
+	/**
+	 * 블록의 형태
+	 */
 	Shape curPiece;
+	/**
+	 * 가상의 테트리스 필드
+	 */
 	Tetrominoes[] board;
 
 	public Board(Tetris parent) {
 
 		setFocusable(true);
 		curPiece = new Shape();
-		//implements ActionListener하여 actionPerformed의 내용을 400 마다 실행한다.
+		//일정 시간마다 actionPerformed 메소드 실행(imp ActionListener)
 		timer = new Timer(400, this);
 		timer.start();
 
 		statusbar = parent.getStatusBar();
+		
 		board = new Tetrominoes[BoardWidth * BoardHeight];
 		addKeyListener(new TAdapter());
 		clearBoard();
@@ -56,7 +67,7 @@ public class Board extends JPanel implements ActionListener {
 		//떨어지는 상태 확인
 		if (isFallingFinished) {
 			isFallingFinished = false;
-			newPiece();
+			newPiece();// 새로운 블록 생성
 		} else {
 			oneLineDown();
 		}
@@ -116,6 +127,7 @@ public class Board extends JPanel implements ActionListener {
 		Dimension size = getSize();
 		int boardTop = (int) size.getHeight() - BoardHeight * squareHeight();
 
+		//작은
 		for (int i = 0; i < BoardHeight; ++i) {
 			for (int j = 0; j < BoardWidth; ++j) {
 				Tetrominoes shape = shapeAt(j, BoardHeight - i - 1);
@@ -154,6 +166,9 @@ public class Board extends JPanel implements ActionListener {
 			pieceDropped();
 	}
 
+	/**
+	 * 테트리스 필드 초기화
+	 */
 	private void clearBoard() {
 		for (int i = 0; i < BoardHeight * BoardWidth; ++i)
 			board[i] = Tetrominoes.NoShape;
@@ -178,7 +193,7 @@ public class Board extends JPanel implements ActionListener {
 		curX = BoardWidth / 2 + 1;
 		curY = BoardHeight - 1 + curPiece.minY();
 		
-		//게임 오버 설정
+		//게임 오버 조건 확인
 		if (!tryMove(curPiece, curX, curY)) {
 			curPiece.setShape(Tetrominoes.NoShape);
 			timer.stop();
@@ -187,12 +202,22 @@ public class Board extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * 블록 이동 시도
+	 * @param newPiece
+	 * @param newX
+	 * @param newY
+	 * @return 문제가 없는 경우 true, 문제 발생시 false
+	 */
 	private boolean tryMove(Shape newPiece, int newX, int newY) {
+		//4개의 작은 블록 확인
 		for (int i = 0; i < 4; ++i) {
-			int x = newX + newPiece.x(i);
-			int y = newY - newPiece.y(i);
+			int x = newX + newPiece.x(i);//양옆이동
+			int y = newY - newPiece.y(i);//위아래 이동
+			//x혹은 y가 위, 아래, 양 옆으로 넘어가지 않는지 확인
 			if (x < 0 || x >= BoardWidth || y < 0 || y >= BoardHeight)
 				return false;
+			//
 			if (shapeAt(x, y) != Tetrominoes.NoShape)
 				return false;
 		}
