@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import kr.juyoung.tetris.TetrisFrame;
+import kr.juyoung.tetris.game.TetrisBlock.BlocksShape;
 import kr.juyoung.tetris.menu_main.TetrisMenu;
 
 public class TetrisGame extends JPanel implements ActionListener{
@@ -16,14 +17,27 @@ public class TetrisGame extends JPanel implements ActionListener{
 	Timer timer;
 	TetrisFrame parent;
 	
+	final int boardWidth = 10;
+	final int boardHeight = 22;
+	
 	int pointX = 0;
 	int pointY = 0;
+	
+	TetrisBlock tetrisBlock;
+	BlocksShape[] tetrisBoard;
+	
+	boolean isNewBlock = false;
+	boolean isStart = false;
+	boolean isStop = false;
 	
 	int score = 0;
 
 	public TetrisGame(TetrisFrame parent) {
 		System.out.println("start game");
 		this.parent = parent;
+		
+		tetrisBlock = new TetrisBlock();
+		tetrisBoard = new BlocksShape[boardWidth * boardHeight];
 		
 		timer = new Timer(600, this);
 		timer.start();
@@ -34,8 +48,56 @@ public class TetrisGame extends JPanel implements ActionListener{
 	}
 
 	@Override
+	public void actionPerformed(ActionEvent e) {
+		// 새 블록을 생성하는지 확인
+		if(isNewBlock){
+			isNewBlock = false;
+			newBlock();
+		}else{
+			
+		}
+		
+	}
+
+	private void newBlock() {
+		tetrisBlock.setRandomShape();
+		//블록 생성 위치 정의
+		pointX = boardHeight / 2;
+		pointY = boardWidth - 1;
+		
+		//블록 생성 및 게임 오버 조건 확인
+		if(!tryMove(tetrisBlock, pointX, pointY)){
+			tetrisBlock.setShape(BlocksShape.NoBlock);
+			timer.stop();
+			isStart = false;
+			parent.setStateLabel("game over");
+		}
+	}
+
+	private boolean tryMove(TetrisBlock block, int newX, int newY) {
+		
+		for(int i = 0; i < 4; ++i){
+			int x = newX + block.x(i);
+			int y = newY + block.y(i);
+			
+			if( x < 0 || x >= boardWidth || y < 0 || y >= boardHeight){
+				return false;
+			}
+			
+			if(shapeAt(x, y) != BlocksShape.NoBlock){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	private BlocksShape shapeAt(int x, int y) {
+		return tetrisBoard[y * boardWidth + x];
+	}
+
+	@Override
 	public void paint(Graphics g) {
-		// TODO 주기적으로 게임 화면을 그려 주는 부분
 		super.paint(g);
 		System.out.println("print");
 		// 사용자가 조정하는 블록
@@ -43,11 +105,4 @@ public class TetrisGame extends JPanel implements ActionListener{
 		// 이미 쌓여 있는 블록
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		//게임 오버 확인
-		
-		//라인 제거 확인
-	}
-	
 }

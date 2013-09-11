@@ -6,7 +6,7 @@ public class TetrisBlock {
 		NoBlock, LineBlock, SquareBlock, TBlock, ZBlock, ReverseZBlock, LBlock, ReverseLBlock
 	}
 
-	private BlocksShape selectedBlock;
+	private BlocksShape nowBlockShape;
 
 	private int coords[][];
 	private int coordsTable[][][];
@@ -16,9 +16,9 @@ public class TetrisBlock {
 		setShape(BlocksShape.NoBlock);
 	}
 
-	private void setShape(BlocksShape shape) {
+	public void setShape(BlocksShape shape) {
 		coordsTable = new int[][][] {
-				{ { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },// no shape
+				{ { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } },// no
 				{ { 0, 1 }, { 0, 0 }, { 0, -1 }, { 0, -2 } }, // Line
 				{ { -1, 0 }, { 0, 0 }, { -1, -1 }, { 0, -1 } }, // Square
 				{ { -1, 0 }, { 0, 0 }, { 1, 0 }, { 0, 1 } },// T
@@ -34,9 +34,17 @@ public class TetrisBlock {
 			}
 		}
 
-		setSelectedBlock(shape);
+		nowBlockShape = shape;
+	}
+	
+	public void setRandomShape() {
+		// TODO Auto-generated method stub
+		
 	}
 
+	/*
+	 * 이하 테스트 용도의 코드
+	 */
 	public int[][] getCoords() {
 		return coords;
 	}
@@ -46,11 +54,21 @@ public class TetrisBlock {
 	}
 
 	public BlocksShape getSelectedBlock() {
-		return selectedBlock;
+		return nowBlockShape;
 	}
 
 	public void setSelectedBlock(BlocksShape selectedBlock) {
-		this.selectedBlock = selectedBlock;
+		this.nowBlockShape = selectedBlock;
+	}
+
+	public int x(int i) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int y(int i) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

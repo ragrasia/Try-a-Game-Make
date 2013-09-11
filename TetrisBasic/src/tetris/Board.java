@@ -63,7 +63,6 @@ public class Board extends JPanel implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println("new");
 		//떨어지는 상태 확인
 		if (isFallingFinished) {
 			isFallingFinished = false;
@@ -127,7 +126,7 @@ public class Board extends JPanel implements ActionListener {
 		Dimension size = getSize();
 		int boardTop = (int) size.getHeight() - BoardHeight * squareHeight();
 
-		//작은
+		//쌓여 있는 블록을 그린다.
 		for (int i = 0; i < BoardHeight; ++i) {
 			for (int j = 0; j < BoardWidth; ++j) {
 				Tetrominoes shape = shapeAt(j, BoardHeight - i - 1);

@@ -102,8 +102,8 @@ public class TetrisFrame extends JFrame{
 		bodyPanel.add(new TetrisGame(this));
 	}
 
-	public void setScore(int add_score) {
-		score = score + add_score;
+	public void setScore(int addScore) {
+		score = score + addScore;
 		scoreLabel.setText("score : " + score);
 	}
 
@@ -111,8 +111,12 @@ public class TetrisFrame extends JFrame{
 		tetrisMenu.exchangeSelectLabel();
 	}
 
-	public void setSelectLabel(String set_text) {
-		tetrisMenu.setText(set_text);
+	public void setSelectLabel(String setText) {
+		tetrisMenu.setText(setText);
+	}
+
+	public void setStateLabel(String text) {
+		stateLabel.setText(text);
 	}
 
 }
