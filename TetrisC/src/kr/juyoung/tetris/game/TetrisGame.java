@@ -10,7 +10,7 @@ import javax.swing.Timer;
 
 import kr.juyoung.tetris.TetrisFrame;
 import kr.juyoung.tetris.game.TetrisBlock.BlocksShape;
-import kr.juyoung.tetris.menu_main.TetrisMenu;
+import kr.juyoung.tetris.menu.TetrisMenu;
 
 public class TetrisGame extends JPanel implements ActionListener{
 
@@ -92,6 +92,12 @@ public class TetrisGame extends JPanel implements ActionListener{
 		return true;
 	}
 
+	/**
+	 * tetrisBoard 배열에서 
+	 * @param x 라인에서 있는 순서
+	 * @param y 라인을 뜻함
+	 * @return
+	 */
 	private BlocksShape shapeAt(int x, int y) {
 		return tetrisBoard[y * boardWidth + x];
 	}

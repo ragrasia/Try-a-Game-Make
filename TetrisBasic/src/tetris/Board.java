@@ -14,20 +14,24 @@ import javax.swing.Timer;
 
 import tetris.Shape.Tetrominoes;
 
-/*
- * 테트리스 블록은 블록이라고 말하며 그 블록을 이루는 사각형을 작은 블록이라고 지칭한다.
- */
-
 public class Board extends JPanel implements ActionListener {
 
-	//가상적인 테트리스 필드의 크기
+	/**
+	 * 가상적 테트리스 필드의 가로 길이
+	 */
 	final int BoardWidth = 10;
+	/**
+	 * 가상적 테트리스 필드의 세로 길이
+	 */
 	final int BoardHeight = 22;
 
 	Timer timer;
 	boolean isFallingFinished = false;
 	boolean isStarted = false;
 	boolean isPaused = false;
+	/**
+	 * 제거한 라인 카운트 - 점수 계산
+	 */
 	int numLinesRemoved = 0;
 	/**
 	 * 블록의 X 좌표
@@ -48,25 +52,29 @@ public class Board extends JPanel implements ActionListener {
 	Tetrominoes[] board;
 
 	public Board(Tetris parent) {
-
-		setFocusable(true);
+		setFocusable(true);//포커스 설정
 		curPiece = new Shape();
-		//일정 시간마다 actionPerformed 메소드 실행(imp ActionListener)
-		timer = new Timer(400, this);
-		timer.start();
+		timer = new Timer(400, this);//일정 시간마다 actionPerformed 메소드 실행(imp ActionListener) 400 ms
+		timer.start();//타이머 시작
 
+		// 테트리스 필드에서 점수 표기 라벨을 얻어옴
 		statusbar = parent.getStatusBar();
 		
+		//쌓이는 블록에 대한 정보를 저장하는 필드 생성
 		board = new Tetrominoes[BoardWidth * BoardHeight];
+		//테트리스 게임에 대한 키보드 리스너 등록
 		addKeyListener(new TAdapter());
 		clearBoard();
 	}
 
+	/**
+	 * 타이머에서 사용하는 ActionListener가 실행하는 메소드
+	 */
 	public void actionPerformed(ActionEvent e) {
 		//떨어지는 상태 확인
 		if (isFallingFinished) {
 			isFallingFinished = false;
-			newPiece();// 새로운 블록 생성
+			newPiece();
 		} else {
 			oneLineDown();
 		}
@@ -88,12 +96,21 @@ public class Board extends JPanel implements ActionListener {
 		return (int) getSize().getHeight() / BoardHeight;
 	}
 
+	/**
+	 * 테트리스 필드에서 해당하는 좌표에 무엇이 존재하는 가 확인
+	 * @param x
+	 * @param y
+	 * @return Tetrominoes 
+	 */
 	Tetrominoes shapeAt(int x, int y) {
 		return board[(y * BoardWidth) + x];
 	}
 
+	/**
+	 * 테트리스 게임을 시작하는 함수
+	 */
 	public void start() {
-		if (isPaused)
+		if (isPaused)// 정지 상태인 경우 정지
 			return;
 
 		isStarted = true;
@@ -105,6 +122,9 @@ public class Board extends JPanel implements ActionListener {
 		timer.start();
 	}
 
+	/**
+	 * 게임 정지 혹은 다시 시작(정지 풀기)
+	 */
 	private void pause() {
 		if (!isStarted)
 			return;
@@ -136,7 +156,9 @@ public class Board extends JPanel implements ActionListener {
 			}
 		}
 
+		// 현재 떨어지고 있는 테트리스 블록을 그린다.
 		if (curPiece.getShape() != Tetrominoes.NoShape) {
+			//테트리스 블록을 그린다.
 			for (int i = 0; i < 4; ++i) {
 				int x = curX + curPiece.x(i);
 				int y = curY - curPiece.y(i);
@@ -147,6 +169,9 @@ public class Board extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * 테트리스 블록 한번에 떨어 트리기
+	 */
 	private void dropDown() {
 		int newY = curY;
 		while (newY > 0) {
@@ -158,7 +183,7 @@ public class Board extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * 블록 이동 처리 1
+	 * 블록 이동 처리
 	 */
 	private void oneLineDown() {
 		if (!tryMove(curPiece, curX, curY - 1))
@@ -173,6 +198,9 @@ public class Board extends JPanel implements ActionListener {
 			board[i] = Tetrominoes.NoShape;
 	}
 
+	/**
+	 * 테트리스 블록 쌓기
+	 */
 	private void pieceDropped() {
 		for (int i = 0; i < 4; ++i) {
 			int x = curX + curPiece.x(i);
@@ -186,9 +214,12 @@ public class Board extends JPanel implements ActionListener {
 			newPiece();
 	}
 
+	/**
+	 * 새로운 테트리스 블록을 생성한다.
+	 */
 	private void newPiece() {
-		curPiece.setRandomShape();
-		//처음 블록 생성 위치
+		curPiece.setRandomShape();// 랜덤 블록 설정
+		//처음 블록 생성 위치 - 상단 중앙
 		curX = BoardWidth / 2 + 1;
 		curY = BoardHeight - 1 + curPiece.minY();
 		
@@ -211,12 +242,13 @@ public class Board extends JPanel implements ActionListener {
 	private boolean tryMove(Shape newPiece, int newX, int newY) {
 		//4개의 작은 블록 확인
 		for (int i = 0; i < 4; ++i) {
+			//최초 좌표 0, 0 은 상단 왼쪽이다.
 			int x = newX + newPiece.x(i);//양옆이동
 			int y = newY - newPiece.y(i);//위아래 이동
 			//x혹은 y가 위, 아래, 양 옆으로 넘어가지 않는지 확인
 			if (x < 0 || x >= BoardWidth || y < 0 || y >= BoardHeight)
 				return false;
-			//
+			//x y 좌표에 블록이 있는지 확인
 			if (shapeAt(x, y) != Tetrominoes.NoShape)
 				return false;
 		}

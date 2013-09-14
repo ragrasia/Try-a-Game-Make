@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 
 import kr.juyoung.tetris.game.TetrisGame;
 import kr.juyoung.tetris.game.TetrisGameKeyListener;
-import kr.juyoung.tetris.menu_main.TetrisMenu;
-import kr.juyoung.tetris.menu_main.TetrisMenuKeyListener;
+import kr.juyoung.tetris.menu.TetrisMenu;
+import kr.juyoung.tetris.menu.TetrisMenuKeyListener;
 
 public class TetrisFrame extends JFrame{
 	private JLabel stateLabel = new JLabel("hellow Tetris Game!");
