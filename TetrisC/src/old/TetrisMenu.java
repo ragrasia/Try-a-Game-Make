@@ -1,4 +1,4 @@
-package kr.juyoung.tetris.menu;
+package old;
 
 import javax.swing.JLabel;
 

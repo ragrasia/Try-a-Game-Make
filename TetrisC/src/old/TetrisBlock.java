@@ -1,4 +1,6 @@
-package kr.juyoung.tetris.game;
+package old;
+
+import java.util.Random;
 
 public class TetrisBlock {
 
@@ -34,12 +36,52 @@ public class TetrisBlock {
 			}
 		}
 
-		nowBlockShape = shape;
+		setNowBlockShape(shape);
 	}
-	
+
 	public void setRandomShape() {
-		// TODO Auto-generated method stub
-		
+		Random r = new Random();
+		int x = Math.abs(r.nextInt()) % 7 + 1;
+		BlocksShape[] values = BlocksShape.values();
+		setShape(values[x]);
+	}
+
+	public int getX(int index) {
+		return coords[index][0];
+	}
+
+	public int getY(int index) {
+		return coords[index][1];
+	}
+
+	public BlocksShape getNowBlockShape() {
+		return nowBlockShape;
+	}
+
+	/**
+	 * 블록이 가지고 있는 제일 작은 X 좌표
+	 * 
+	 * @return X 좌표
+	 */
+	public int minX() {
+		int m = coords[0][0];// 첫 번째 X 좌표
+		for (int i = 0; i < 4; i++) {
+			m = Math.min(m, coords[i][0]); // 각각의 X 좌표와 비교한다.
+		}
+		return m;
+	}
+
+	/**
+	 * 블록이 가지고 있는 제일 작은 Y 좌표
+	 * 
+	 * @return Y 좌표
+	 */
+	public int minY() {
+		int m = coords[0][1];
+		for (int i = 0; i < 4; i++) {
+			m = Math.min(m, coords[i][1]);
+		}
+		return m;
 	}
 
 	/*
@@ -53,22 +95,18 @@ public class TetrisBlock {
 		this.coords = coords;
 	}
 
-	public BlocksShape getSelectedBlock() {
-		return nowBlockShape;
+	public void setNowBlockShape(BlocksShape nowBlockShape) {
+		this.nowBlockShape = nowBlockShape;
 	}
 
-	public void setSelectedBlock(BlocksShape selectedBlock) {
-		this.nowBlockShape = selectedBlock;
-	}
-
-	public int x(int i) {
+	public TetrisBlock rotateRight() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
-	public int y(int i) {
+	public TetrisBlock rotateLeft() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 }

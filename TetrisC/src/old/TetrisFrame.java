@@ -1,4 +1,4 @@
-package kr.juyoung.tetris;
+package old;
 
 import java.awt.BorderLayout;
 
@@ -6,10 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import kr.juyoung.tetris.game.TetrisGame;
-import kr.juyoung.tetris.game.TetrisGameKeyListener;
-import kr.juyoung.tetris.menu.TetrisMenu;
-import kr.juyoung.tetris.menu.TetrisMenuKeyListener;
 
 public class TetrisFrame extends JFrame{
 	private JLabel stateLabel = new JLabel("hellow Tetris Game!");
@@ -19,8 +15,6 @@ public class TetrisFrame extends JFrame{
 
 	private TetrisMenu tetrisMenu = new TetrisMenu();
 
-	private int score = 0;
-	
 	private TetrisKeyListener key;
 
 	public static void main(String[] args) {
@@ -97,14 +91,11 @@ public class TetrisFrame extends JFrame{
 
 	public void startGame() {
 		removeKeyListener(key);
-		key = new TetrisGameKeyListener(this);
-		addKeyListener(key);
 		bodyPanel.add(new TetrisGame(this));
 	}
 
-	public void setScore(int addScore) {
-		score = score + addScore;
-		scoreLabel.setText("score : " + score);
+	public void setScoreTxt(String scoreTxt) {
+		scoreLabel.setText("<html>"+scoreTxt+"<br /> </html>");
 	}
 
 	public void exchangeSelectLabel() {

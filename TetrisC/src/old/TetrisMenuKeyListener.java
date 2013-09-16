@@ -1,12 +1,11 @@
-package kr.juyoung.tetris.menu;
+package old;
 
 import java.awt.event.KeyEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import kr.juyoung.tetris.TetrisFrame;
-import kr.juyoung.tetris.TetrisKeyListener;
+
 
 public class TetrisMenuKeyListener implements TetrisKeyListener {
 
