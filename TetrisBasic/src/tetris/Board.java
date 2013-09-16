@@ -242,7 +242,7 @@ public class Board extends JPanel implements ActionListener {
 	private boolean tryMove(Shape newPiece, int newX, int newY) {
 		//4개의 작은 블록 확인
 		for (int i = 0; i < 4; ++i) {
-			//최초 좌표 0, 0 은 상단 왼쪽이다.
+			//최초 좌표 0, 0 은 상단 왼쪽이다.0
 			int x = newX + newPiece.x(i);//양옆이동
 			int y = newY - newPiece.y(i);//위아래 이동
 			//x혹은 y가 위, 아래, 양 옆으로 넘어가지 않는지 확인
