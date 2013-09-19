@@ -23,5 +23,20 @@ public class TetrisTest {
 		System.out.println(block.getNowBlockShape());
 		
 	}
+	
+	@Test
+	public void countTest(){
+		System.out.println("ex1");
+		
+		for(int i= 0; i < 4; ++i ){
+			System.out.println(i);
+		}
+		
+		System.out.println("ex2");
+		
+		for(int i= 0; i < 4; i++ ){
+			System.out.println(i);
+		}
+	}
 
 }

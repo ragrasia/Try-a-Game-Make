@@ -206,6 +206,7 @@ public class Board extends JPanel implements ActionListener {
 			int x = curX + curPiece.x(i);
 			int y = curY - curPiece.y(i);
 			board[(y * BoardWidth) + x] = curPiece.getShape();
+			System.out.println("add : "+((y * BoardWidth) + x) + " shape : "+curPiece.getShape());
 		}
 
 		removeFullLines();
@@ -222,7 +223,7 @@ public class Board extends JPanel implements ActionListener {
 		//처음 블록 생성 위치 - 상단 중앙
 		curX = BoardWidth / 2 + 1;
 		curY = BoardHeight - 1 + curPiece.minY();
-		
+		System.out.println("create location x : " + curX+ " y : "+ curY);
 		//게임 오버 조건 확인
 		if (!tryMove(curPiece, curX, curY)) {
 			curPiece.setShape(Tetrominoes.NoShape);
